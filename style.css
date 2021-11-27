@@ -1,0 +1,72 @@
+﻿nav {
+    background-color: rgb(38 35 39);
+}
+
+.nav-item {
+    cursor: pointer;
+}
+
+    .nav-item :hover {
+        font-weight: bold;
+    }
+
+#navbar-line {
+    background-color: rebeccapurple;
+    padding: 3px;
+}
+
+#edit-switch {
+    position: absolute;
+    right: 1%;
+}
+
+#brand {
+    background-color: white;
+}
+
+    #brand h1 {
+        cursor: pointer;
+    }
+
+h1 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#main-content {
+    margin: 5% 20% 0 20%;
+}
+
+@media only screen and (max-width: 1100px) {
+    #main-content {
+        margin: 5% 10% 0 10%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    #main-content {
+        margin: 0%;
+    }
+}
+
+#home-page {
+    font-size: xx-large;
+    font-style: italic;
+}
+
+    #home-page img {
+        margin-left: 10%;
+    }
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+    th:first-child, td:first-child, th:last-child, td:last-child {
+        width: 1%;
+        white-space: nowrap;
+    }
+
+.asterisk {
+    color: red;
+}

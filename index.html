@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Spaghetti Coding School</title>
+    <link rel="icon" href="Assets/pasta-icon.png">
+
+    <!-- STYLESHEETS -->
+    <link href="Libraries/Content/bootstrap.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <div class="navigation-bar fixed-top">
+        <div>
+            <nav class="navbar navbar-expand navbar-dark justify-content-center">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <div class="nav-link" onclick="goToPage('courses-table')">Courses</div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" onclick="goToPage('students-table')">Students</div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" onclick="goToPage('trainers-table')">Trainers</div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" onclick="goToPage('assignments-table')">Assignments</div>
+                    </li>
+                </ul>
+                <!-- EDIT SWITCH -->
+                <div id="edit-switch" class="custom-control custom-switch">
+                    <input id="edit-switch-input" class="edit-switch-input custom-control-input" type="checkbox" onchange="toggleEdit(this);">
+                    <label for="edit-switch-input" class="custom-control-label text-light">EDIT</label>
+                </div>
+            </nav>
+        </div>
+        <div id="navbar-line"></div>
+
+        <!-- BRAND -->
+        <div id="brand" class="text-center">
+            <h1 class="brand" onclick="goToPage('home')">Spaggeti Coding School</h1>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-content" class="jumbotron-fluid">
+        <!-- HOME -->
+        <div id="home-page" class="page text-center">
+            <p>welcome to</p>
+            <h1>Spaghetti Coding School</h1>
+            <h3>Learn coding, like an italian chef!</h3>
+            <img class="rounded-lg" src="Assets/spaghetti.png" />
+        </div>
+        <!-- TABLES -->
+        <!-- Courses -->
+        <div id="courses-table-page" class="page table-responsive">
+            <h2>Courses</h2>
+            <table class="table table-bordered table-striped table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col"><!--index--></th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Stream</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Students</th>
+                        <th scope="col">Trainers</th>
+                        <th scope="col">Assignments</th>
+                        <th scope="col">Assignments per Student</th>
+                        <th scope="col" class="edit"><!--edit buttons--></th>
+                    </tr>
+                </thead>
+                <tbody id="courses-table-body"></tbody>
+            </table>
+            <button class="edit btn btn-dark" onclick="openNewForm('courses');">Add Course</button>
+        </div>
+        <!-- Students -->
+        <div id="students-table-page" class="page table-responsive">
+            <h2>Students</h2>
+            <table class="table table-bordered table-striped table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col"><!--index--></th>
+                        <th scope="col">Firstname</th>
+                        <th scope="col">Lastname</th>
+                        <th scope="col">Birthdate</th>
+                        <th scope="col">Tuition Fees</th>
+                        <th scope="col">Course</th>
+                        <th scope="col">Assignments</th>
+                        <th scope="col" class="edit"><!--edit buttons--></th>
+                    </tr>
+                </thead>
+                <tbody id="students-table-body"></tbody>
+            </table>
+            <!-- Edit Button -->
+            <button class="edit btn btn-dark" onclick="openNewForm('students');">Add Student</button>
+        </div>
+        <!-- Trainers -->
+        <div id="trainers-table-page" class="page table-responsive">
+            <h2>Trainers</h2>
+            <table class="table table-bordered table-striped table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col"><!--index--></th>
+                        <th scope="col">Firstname</th>
+                        <th scope="col">Lastname</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col" class="edit"><!--edit buttons--></th>
+                    </tr>
+                </thead>
+                <tbody id="trainers-table-body"></tbody>
+            </table>
+            <!-- Edit Button -->
+            <button class="edit btn btn-dark" onclick="openNewForm('trainers');">Add Trainer</button>
+        </div>
+        <!-- Assignments -->
+        <div id="assignments-table-page" class="page table-responsive">
+            <h2>Assignments</h2>
+            <table class="table table-bordered table-striped table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col"><!--index--></th>
+                        <th scope="col">Title</th>
+                        <th scope="col" colspan="2">Description</th>
+                        <th scope="col">Submit Date</th>
+                        <th scope="col" class="edit"><!--edit buttons--></th>
+                    </tr>
+                </thead>
+                <tbody id="assignments-table-body"></tbody>
+            </table>
+            <button class="edit btn btn-dark" onclick="openNewForm('assignments')">Add Assignment</button>
+        </div>
+
+        <!-- FORMS -->
+        <!-- Courses -->
+        <div id="courses-form-page" class="page">
+            <h2><span id="courses-form-heading"></span> Course</h2>
+            <form onsubmit="submitForm(event, 'courses');" autocomplete="off">
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="courses-input-title">Title<span class="asterisk">*</span></label>
+                    <input id="courses-input-title" class="courses-input form-control" type="text" value=""
+                           list="subjects-datalist" required />
+                </div>
+                <!-- Stream -->
+                <div class="form-group">
+                    <label for="courses-input-stream">Stream<span class="asterisk">*</span></label>
+                    <input id="courses-input-stream" class="courses-input form-control" type="number" value=""
+                           min="1" required />
+                </div>
+                <!-- Type -->
+                <div>
+                    <!-- Part-Time -->
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input id="courses-rbtn-parttime" class="courses-input form-check-input" type="radio"
+                                   name="type" checked required />Part-Time
+                        </label>
+                    </div>
+                    <!-- Full-Time -->
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input id="courses-rbtn-fulltime" class="courses-input form-check-input" type="radio"
+                                   name="type" required />Full-Time
+                        </label>
+                    </div>
+                </div>
+                <!-- Start Date -->
+                <div class="form-group">
+                    <label for="courses-input-startdate">Start Date<span class="asterisk">*</span></label>
+                    <input id="courses-input-startdate" class="courses-input form-control" type="date" value=""
+                           min="2020-01-01" max="2030-01-01" required />
+                </div>
+                <!-- End Date -->
+                <div class="form-group">
+                    <label for="courses-input-enddate">End Date<span class="asterisk">*</span></label>
+                    <input id="courses-input-enddate" class="courses-input form-control" type="date" value=""
+                           min="2020-01-01" max="2030-01-01" required />
+                </div>
+                <!-- Trainers -->
+                <div class="form-group">
+                    <label for="courses-input-trainers">Trainers</label>
+                    <select id="courses-input-trainers" class="courses-input form-control" multiple></select>
+                </div>
+                <!-- Assignments -->
+                <div class="form-group">
+                    <label for="courses-input-assignments">Assignments</label>
+                    <select id="courses-input-assignments" class="courses-input form-control" multiple></select>
+                </div>
+                <!-- Index (hidden)-->
+                <input id="courses-input-index" class="courses-input" type="hidden" />
+                <!-- Submit Button -->
+                <input class="btn btn-dark" type="submit" value="Submit" />
+            </form>
+        </div>
+        <!-- Student -->
+        <div id="students-form-page" class="page">
+            <h2><span id="students-form-heading"></span> Student</h2>
+            <form onsubmit="submitForm(event, 'students');" autocomplete="off">
+                <!-- First Name -->
+                <div class="form-group">
+                    <label for="students-input-firstname">First Name<span class="asterisk">*</span></label>
+                    <input id="students-input-firstname" class="students-input form-control" type="text" value=""
+                           pattern="[A-Za-z \-]+" onkeypress="return /[a-z \-]/i.test(event.key)" required />
+                </div>
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="students-input-lastname">Last Name<span class="asterisk">*</span></label>
+                    <input id="students-input-lastname" class="students-input form-control" type="text" value=""
+                           pattern="[A-Za-z \-]+" onkeypress="return /[a-z \-]/i.test(event.key)" required />
+                </div>
+                <!-- Birthdate -->
+                <div class="form-group">
+                    <label for="students-input-birthdate">Birthdate<span class="asterisk">*</span></label>
+                    <input id="students-input-birthdate" class="students-input form-control" type="date" value=""
+                           min="1930-01-01" max="2002-01-01" required />
+                </div>
+                <!-- Tuition Fees -->
+                <div class="form-group">
+                    <label for="students-input-fees">Tuition Fees <small>(in euros)</small><span class="asterisk">*</span></label>
+                    <input id="students-input-fees" class="students-input form-control" type="number" value=""
+                           min="0" max="10000" required />
+                </div>
+                <!-- Course -->
+                <div class="form-group">
+                    <label for="students-input-course">Course</label>
+                    <select id="students-input-course" class="students-input form-control"
+                            onchange="onCourseChange(this);"></select>
+                </div>
+                <!-- Assignments -->
+                <div class="form-group">
+                    <label for="students-input-course">Assignments</label>
+                    <select id="students-input-assignments" class="students-input form-control" multiple></select>
+                </div>
+                <!-- Index (hidden)-->
+                <input id="students-input-index" class="students-input" type="hidden" />
+                <!-- Submit Button -->
+                <input class="btn btn-dark" type="submit" value="Submit" />
+            </form>
+        </div>
+        <!-- Trainer -->
+        <div id="trainers-form-page" class="page">
+            <h2><span id="trainers-form-heading"></span> Trainer</h2>
+            <form onsubmit="submitForm(event, 'trainers');" autocomplete="off">
+                <!-- First Name -->
+                <div class="form-group">
+                    <label for="trainers-input-firstname">First Name<span class="asterisk">*</span></label>
+                    <input id="trainers-input-firstname" class="trainers-input form-control" type="text" value=""
+                           pattern="[A-Za-z \-]+" onkeypress="return /[a-z \-]/i.test(event.key)" required />
+                </div>
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="trainers-input-lastname">Last Name<span class="asterisk">*</span></label>
+                    <input id="trainers-input-lastname" class="trainers-input form-control" type="text" value=""
+                           pattern="[A-Za-z \-]+" onkeypress="return /[a-z \-]/i.test(event.key)" required />
+                </div>
+                <!-- Subject -->
+                <div class="form-group">
+                    <label for="trainers-input-subject">Subject <small>(seperate multiple subjects by commas, or spaces)</small><span class="asterisk">*</span></label>
+                    <input id="trainers-input-subject" class="trainers-input form-control" type="text" value=""
+                           placeholder="Add field of expertise (ex. C#)" list="subjects-datalist" required />
+                </div>
+                <!-- Index (hidden)-->
+                <input id="trainers-input-index" class="trainers-input" type="hidden" />
+                <!-- Submit Button -->
+                <input class="btn btn-dark" type="submit" value="Submit" />
+            </form>
+        </div>
+        <!-- Assignment -->
+        <div id="assignments-form-page" class="page">
+            <h2><span id="assignments-form-heading"></span> Assignment</h2>
+            <form onsubmit="submitForm(event, 'assignments');" autocomplete="off">
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="assignments-input-title">Title<span class="asterisk">*</span></label>
+                    <input id="assignments-input-title" class="assignments-input form-control" type="text" value="" required />
+                </div>
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="assignments-input-description">Description</label>
+                    <textarea id="assignments-input-description" class="assignments-input form-control"
+                              rows="3" maxlength="250"></textarea>
+                </div>
+                <!-- Submit Date -->
+                <div class="form-group">
+                    <label for="assignments-input-subdate">Submit Date<span class="asterisk">*</span></label>
+                    <input id="assignments-input-subdate" class="assignments-input form-control" type="date" value="" required />
+                </div>
+                <!-- Index (hidden)-->
+                <input id="assignments-input-index" class="assignments-input" type="hidden" />
+                <!-- Submit Button -->
+                <input class="btn btn-dark" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+
+    <!-- SUBJECTS DATALIST -->
+    <datalist id="subjects-datalist">
+        <option value="C">
+        <option value="C#">
+        <option value="C++">
+        <option value="GDscript">
+        <option value="Go">
+        <option value="HTML/CSS">
+        <option value="Java">
+        <option value="JavaScript">
+        <option value="PHP">
+        <option value="Python">
+        <option value="Ruby">
+        <option value="SQL">
+    </datalist>
+
+    <!-- SCRIPTS -->
+    <script src="Libraries/Scripts/jquery-3.0.0.js"></script>
+    <script src="Scripts/classes.js"></script>
+    <script src="Scripts/tables.js"></script>
+    <script src="Scripts/forms.js"></script>
+    <script src="Scripts/page-switching.js"></script>
+    <script src="Scripts/synthetic-data.js"></script>
+    <script src="Scripts/main.js"></script>
+</body>
+</html>
